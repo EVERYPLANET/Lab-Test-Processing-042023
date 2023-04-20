@@ -9,6 +9,7 @@ void setup(){
 flag newFlag;
 
 void draw(){
+  background(0);
   newFlag.render();
 
 }

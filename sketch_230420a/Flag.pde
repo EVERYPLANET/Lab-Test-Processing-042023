@@ -50,4 +50,9 @@ public class flag{
     
     popMatrix();
   }
+  
+  void updateSize(int newWidth,int newHeight){
+    this.fWidth = newWidth;
+    this.fHeight = newHeight;
+  }
 }
