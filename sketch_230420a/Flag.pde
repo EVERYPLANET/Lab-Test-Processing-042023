@@ -6,6 +6,8 @@ public class flag{
   int currentStripe;
   int currentSecond = second();
   boolean direction = true;
+  int leftRight = 1;
+  int Pi = 0;
   
   float currentScaleX = 1;
   float currentScaleY = 1;
@@ -13,15 +15,16 @@ public class flag{
   color[] triColors = {color(22,10,11),color(22,187,147),color(230,100,250),color(40,255,255)};
   
   flag(){
-    this(100,100,6,2,0,0);
+    this(100,100,6,2,0,0,1);
   }
   
-  flag(int fWidth, int fHeight,int stripes,int speed, int x, int y){
+  flag(int fWidth, int fHeight,int stripes,int speed, int x, int y, int leftRight){
     this.fWidth = fWidth;
     this.fHeight = fHeight;
     this.pos = new PVector(x,y);
     this.stripes = stripes;
     this.speed = speed;
+    this.leftRight = leftRight;
   }
   
   void update(){
@@ -32,7 +35,8 @@ public class flag{
     currentStripe = 0;
     pushMatrix();
     
-    translate(pos.x,pos.y);
+    updatePosition();
+    translate(pos.x - fWidth/2,pos.y - fHeight/2);
     updateDirection(speed);
     
     if(direction){
@@ -44,7 +48,7 @@ public class flag{
     }
     
     scale(currentScaleX,currentScaleY);
-    print(speed);
+    print(currentScaleX);
     
     
     //Base Stripes
@@ -82,5 +86,9 @@ public class flag{
       direction = !direction;
       currentSecond = second();
     }
+  }
+  
+  void updatePosition(){
+    pos = new PVector(pos.x + leftRight/10, pos.y + leftRight/10);
   }
 }
