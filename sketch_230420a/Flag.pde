@@ -1,13 +1,16 @@
 public class flag{
 
-  int fWidth,fHeight,speed;
+  int fWidth,fHeight;
+  float speed;
   PVector pos;
   int stripes;
   int currentStripe;
   int currentSecond = second();
   boolean direction = true;
   int leftRight = 1;
-  int Pi = 0;
+  float pie = 0;
+  
+  int wWidth,wHeight;
   
   float currentScaleX = 1;
   float currentScaleY = 1;
@@ -18,7 +21,7 @@ public class flag{
     this(100,100,6,2,0,0,1);
   }
   
-  flag(int fWidth, int fHeight,int stripes,int speed, int x, int y, int leftRight){
+  flag(int fWidth, int fHeight,int stripes,float speed, int x, int y, int leftRight){
     this.fWidth = fWidth;
     this.fHeight = fHeight;
     this.pos = new PVector(x,y);
@@ -33,6 +36,11 @@ public class flag{
   
   void render(){
     currentStripe = 0;
+    pie += PI/160;
+    if(pie >= PI*2){
+      pie = 0;
+    }
+    
     pushMatrix();
     
     updatePosition();
@@ -40,19 +48,18 @@ public class flag{
     updateDirection(speed);
     
     if(direction){
-      currentScaleX += speed/100.0;
-      currentScaleY -= speed/100.0;
+      currentScaleX += (sin(pie)/140);
+      currentScaleY -= (cos(pie)/100);
     }else{
-      currentScaleX -= speed/100.0;
-      currentScaleY += speed/100.0;
+      currentScaleX -= sin(pie)/100;
+      currentScaleY += cos(pie)/100;
     }
     
     scale(currentScaleX,currentScaleY);
-    print(currentScaleX);
     
     
     //Base Stripes
-    for(int i = 0; i< fHeight-fHeight/6; i+= fHeight/(stripes)){
+    for(int i = 0; i< fHeight-fHeight/6+5; i+= fHeight/(stripes)){
         int hue = (255/stripes)*currentStripe;
         noStroke();
         fill(hue,255,255);
@@ -76,12 +83,18 @@ public class flag{
     popMatrix();
   }
   
+    //used to initialise canvas height
+  void initialiseDimensions(int wWidth,int wHeight){
+    this.wWidth = wWidth;
+    this.wHeight = wHeight;
+  }
+  
   void updateSize(int newWidth,int newHeight){
     this.fWidth = newWidth;
     this.fHeight = newHeight;
   }
   
-  void updateDirection(int speed){
+  void updateDirection(float speed){
     if(abs(currentSecond - second())>speed){
       direction = !direction;
       currentSecond = second();
@@ -89,6 +102,7 @@ public class flag{
   }
   
   void updatePosition(){
-    pos = new PVector(pos.x + leftRight/10, pos.y + leftRight/10);
+    pos = new PVector(pos.x + 1, pos.y + 1);
+    
   }
 }
