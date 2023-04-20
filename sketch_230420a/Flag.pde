@@ -7,7 +7,8 @@ public class flag{
   int currentSecond = second();
   boolean direction = true;
   
-  float currentScale = 1;
+  float currentScaleX = 1;
+  float currentScaleY = 1;
   
   color[] triColors = {color(22,10,11),color(22,187,147),color(230,100,250),color(40,255,255)};
   
@@ -35,12 +36,14 @@ public class flag{
     updateDirection(speed);
     
     if(direction){
-      currentScale += speed/70.0;
+      currentScaleX += speed/100.0;
+      currentScaleY -= speed/100.0;
     }else{
-      currentScale -= speed/70.0;
+      currentScaleX -= speed/100.0;
+      currentScaleY += speed/100.0;
     }
     
-    scale(currentScale);
+    scale(currentScaleX,currentScaleY);
     print(speed);
     
     
